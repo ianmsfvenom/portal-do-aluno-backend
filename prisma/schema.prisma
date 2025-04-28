@@ -155,8 +155,6 @@ model Video {
   progressos_alunos   ProgressoAluno[]
   modulos             Modulo?          @relation(fields: [modulo_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "videos_ibfk_1")
 
-
-
   @@map("videos")
   @@index([modulo_id], map: "modulo_id")
 }

@@ -14,7 +14,7 @@ module.exports = new class LoginController {
         if (!isValidPassword) return next(new HttpError(403, 'Usuário ou senha incorretos'));
 
         const secretKey = readFileSync('./private.key', 'utf-8');
-        const token = jsonwebtoken.sign({ id: findUser.id }, secretKey, { expiresIn: '2h' });
+        const token = jwt.sign({ id: findUser.id }, secretKey, { expiresIn: '2h' });
         res.cookie('Authorization', `Bearer ${token}`);
 
         return res.json({ message: 'Logado com sucesso' });
@@ -29,8 +29,9 @@ module.exports = new class LoginController {
         const secretKey = readFileSync('./private.key', 'utf-8');
 
         try {
-            jsonwebtoken.verify(token, secretKey);
+            jwt.verify(token, secretKey);
         } catch (error) {
+            res.clearCookie('Authorization');
             return res.json({ isLogged: false });
         }
 

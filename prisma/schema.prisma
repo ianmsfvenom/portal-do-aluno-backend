@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model AlunoTurma {
+  aluno_id Int
+  turma_id Int
+  usuario  Usuario     @relation(fields: [aluno_id], references: [id], onUpdate: Restrict, map: "alunos_turmas_ibfk_1")
+  turma    Turma       @relation(fields: [turma_id], references: [id], onUpdate: Restrict, map: "alunos_turmas_ibfk_2")
+
+  @@map("alunos_turmas")
+  @@id([aluno_id, turma_id])
+  @@index([turma_id], map: "turma_id")
+}
+
+model Apostila {
+  id                  Int               @id @default(autoincrement())
+  modulo_id           Int?
+  titulo              String?           @db.VarChar(100)
+  arquivo_url         String?           @db.Text
+  modulo              Modulo?          @relation(fields: [modulo_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "apostilas_ibfk_1")
+  progressos_alunos   ProgressoAluno[]
+
+  @@map("apostilas")
+  @@index([modulo_id], map: "modulo_id")
+}
+
+model Avaliacao {
+  id                  Int               @id @default(autoincrement())
+  modulo_id           Int?
+  titulo              String?           @db.VarChar(100)
+  descricao           String?           @db.Text
+  modulo              Modulo?           @relation(fields: [modulo_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "avaliacoes_ibfk_1")
+  progressos_alunos   ProgressoAluno[]
+
+  @@map("avaliacoes")
+  @@index([modulo_id], map: "modulo_id")
+}
+
+model Curso {
+  id              Int       @id @default(autoincrement())
+  titulo          String?   @db.VarChar(100)
+  descricao       String?   @db.Text
+  categoria       String?   @db.VarChar(50)
+  carga_horaria   Int?
+  modulos         Modulo[]
+  turmas          Turma[]
+
+  @@map("cursos")
+}
+
+model Modulo {
+  id         Int          @id @default(autoincrement())
+  curso_id   Int?
+  titulo     String?      @db.VarChar(100)
+  ordem      Int?
+  apostilas  Apostila[]
+  avaliacoes Avaliacao[]
+  curso      Curso?      @relation(fields: [curso_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "modulos_ibfk_1")
+  videos     Video[]
+
+  @@map("modulos")
+  @@index([curso_id], map: "curso_id")
+}
+
+model Parceria {
+  id                    Int       @id @default(autoincrement())
+  aluno_id              Int?
+  descricao_projeto     String?   @db.Text
+  percentual_plataforma Decimal?  @db.Decimal(5, 2)
+  data_assinatura       DateTime? @db.Date
+  contrato_url          String?   @db.Text
+  usuario               Usuario? @relation(fields: [aluno_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "parcerias_ibfk_1")
+
+  @@map("parcerias")
+  @@index([aluno_id], map: "aluno_id")
+}
+
+model Plano {
+  id        Int        @id @default(autoincrement())
+  nome      String?    @db.VarChar(50)
+  descricao String?    @db.Text
+  usuarios  Usuario[]
+
+  @@map("planos")
+}
+
+model ProgressoAluno {
+  aluno_id              Int
+  video_id              Int
+  apostila_id           Int
+  avaliacao_id          Int
+  progresso_video       Int?
+  baixou_apostila       Boolean?
+  nota_avaliacao        Decimal?   @db.Decimal(5, 2)
+  data_ultima_interacao DateTime?  @db.DateTime(0)
+  usuario               Usuario    @relation(fields: [aluno_id], references: [id], onUpdate: Restrict, map: "progresso_aluno_ibfk_1")
+  video                 Video      @relation(fields: [video_id], references: [id], onUpdate: Restrict, map: "progresso_aluno_ibfk_2")
+  apostila              Apostila   @relation(fields: [apostila_id], references: [id], onUpdate: Restrict, map: "progresso_aluno_ibfk_3")
+  avaliacoe             Avaliacao  @relation(fields: [avaliacao_id], references: [id], onUpdate: Restrict, map: "progresso_aluno_ibfk_4")
+
+  @@map("progresso_aluno")
+  @@id([aluno_id, video_id, apostila_id, avaliacao_id])
+  @@index([apostila_id], map: "apostila_id")
+  @@index([avaliacao_id], map: "avaliacao_id")
+  @@index([video_id], map: "video_id")
+}
+
+model Turma {
+  id            Int             @id @default(autoincrement())
+  nome          String?         @db.VarChar(100)
+  curso_id      Int?
+  professor_id  Int?
+  data_inicio   DateTime?       @db.Date
+  data_fim      DateTime?       @db.Date
+  alunos_turmas AlunoTurma[]
+  curso         Curso?          @relation(fields: [curso_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "turmas_ibfk_1")
+  usuario       Usuario?        @relation(fields: [professor_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "turmas_ibfk_2")
+
+  @@map("turmas")
+  @@index([curso_id], map: "curso_id")
+  @@index([professor_id], map: "professor_id")
+}
+
+model Usuario {
+  id                  Int               @id @default(autoincrement())
+  nome                String?           @db.VarChar(100)
+  email               String?           @unique(map: "email") @db.VarChar(100)
+  senha               String?           @db.VarChar(255)
+  tipo                usuarios_tipo?
+  data_cadastro       DateTime?         @default(now()) @db.DateTime(0)
+  plano_id            Int?
+  alunos_turmas       AlunoTurma[]
+  parcerias           Parceria[]
+  progressos_alunos   ProgressoAluno[]
+  turmas              Turma[]
+  plano               Plano?           @relation(fields: [plano_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "usuarios_ibfk_1")
+
+  @@map("usuarios")
+  @@index([plano_id], map: "plano_id")
+}
+
+model Video {
+  id                  Int               @id @default(autoincrement())
+  modulo_id           Int?
+  titulo              String?           @db.VarChar(100)
+  url_video           String?           @db.Text
+  duracao             Int?
+  progressos_alunos   ProgressoAluno[]
+  modulos             Modulo?          @relation(fields: [modulo_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "videos_ibfk_1")
+
+
+
+  @@map("videos")
+  @@index([modulo_id], map: "modulo_id")
+}
+
+enum usuarios_tipo {
+  aluno
+  professor
+  admin
+}

@@ -1,6 +1,7 @@
 const HttpError = require("../errors/HttpError");
 
 module.exports = new class VideoValidator {
+    
     async create(req, res, next) {
         const { modulo_id, titulo, url_video, duracao } = req.body;
         if (!modulo_id || !titulo || !url_video || !duracao) return next(new HttpError(400, 'Modulo, titulo, url e duracao obrigatórios'));

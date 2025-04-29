@@ -9,7 +9,8 @@ module.exports = new class AvaliacaoValidator {
     }
 
     async update(req, res, next) {
-        const { modulo_id } = req.body
+        const { id, modulo_id } = req.body
+        if(!id) return next(new HttpError(400, 'Id é obrigatório'));
         if(modulo_id && isNaN(modulo_id)) return next(new HttpError(400, 'modulo_id deve ser número'));
         next()
     }

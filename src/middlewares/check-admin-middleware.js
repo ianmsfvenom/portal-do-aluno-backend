@@ -1,5 +1,5 @@
 const HttpError = require('../errors/HttpError');
-const jwt = require('jwt');
+const jwt = require('jsonwebtoken');
 const prisma = require('../config/prisma');
 
 const checkAdminMiddleware = async (req, res, next) => {

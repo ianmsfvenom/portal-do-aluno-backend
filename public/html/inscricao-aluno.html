@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/IconAbaID.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/styleInscricao.css">
+    <title>Inscrição - Instituto Digital</title>
+</head>
+
+<body>
+    <div class="login-container">
+        <img src="/img/logoBrancoSF.png" class="imgLogo">
+        <h2>Inscrição</h2>
+        <form action="#" method="POST">
+            <input type="text" name="name" id="name" class="input" placeholder="Nome Completo" required>
+            <input type="text" name="email" id="email" class="input" placeholder="E-mail" required>
+            <input type="password" name="password" id="password" class="input" placeholder="Senha" required>
+            <select id="plano" name="plano" class="input" required>
+            </select>
+            <a href="/aluno/inscricao/pagamento">Seguir para o pagamento</a>
+        </form>
+    </div>
+    <script>
+        fetch('/plano/list').then(async res => {
+            const planos = await res.json();
+            const select = document.getElementById('plano');
+            planos.forEach(plano => {
+                const option = document.createElement('option');
+                option.value = plano.id;
+                option.innerText = plano.nome;
+                select.appendChild(option);
+            })  
+        })
+    </script>
+</body>
+
+</html>

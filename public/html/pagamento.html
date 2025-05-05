@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/IconAbaID.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/styleInscricao.css">
+    <title>Pagamento - Instituto Digital</title>
+</head>
+
+<body>
+    <div class="login-container">
+        <img src="/img/logoBrancoSF.png" class="imgLogo">
+        <h2>Inscrição</h2>
+        <form>
+            <input type="text" name="name" id="name" class="input" placeholder="Nome Completo" required>
+            <input type="text" name="email" id="email" class="input" placeholder="E-mail" required>
+            <input type="password" name="password" id="password" class="input" placeholder="Senha" required>
+            <select id="plano" name="plano" class="input" required>
+            </select>
+            <button type="submit" class="btn-login" id="inscrever">Inscrever-se</button>
+        </form>
+    </div>
+    <script>
+        fetch('/plano/list').then(async res => {
+            const planos = await res.json();
+            const select = document.getElementById('plano');
+            planos.forEach(plano => {
+                const option = document.createElement('option');
+                option.value = plano.id;
+                option.innerText = plano.nome;
+                select.appendChild(option);
+            })  
+        })
+
+        const inscreverButton = document.getElementById('inscrever');
+        inscreverButton.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            const nome = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('password').value;
+            const plano_id = document.getElementById('plano').value;
+
+            fetch('/aluno/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nome, email, senha, plano_id: Number(plano_id) })
+            }).then(async res => {
+                if(res.ok) {
+                    alert('Inscricao efetuada com sucesso! Redirecionando para tela de login...');
+                    window.location.href = '/login';
+                } else {
+                    const response = await res.json();
+                    alert('Erro: ' + response.message);
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

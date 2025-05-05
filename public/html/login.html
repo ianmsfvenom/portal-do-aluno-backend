@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/img/IconAbaID.png" type="image/x-icon">
+  <link rel="stylesheet" href="/css/styleLogin.css">
+  <title>Login - Instituto Digital</title>
+</head>
+
+<body>
+  <div class="login-container">
+    <img src="/img/logoBrancoSF.png" class="imgLogo">
+    <h2>Login</h2>
+      <input type="text" class="input" id="email" placeholder="E-mail" required>
+      <input type="password" class="input" id="password" placeholder="Senha" required>
+      <button type="submit" class="btn-login">Entrar</button>
+    <div class="forgot-password">
+      <a href="#">Esqueceu a senha?</a>
+    </div>
+  </div>
+  <script>
+    const loginButton = document.querySelector('.btn-login');
+    loginButton.addEventListener('click', () => {
+      fetch('/login', {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: document.getElementById('email').value,
+          senha: document.getElementById('password').value
+        })
+      }).then(async res => {
+        if (res.ok) window.location.href = '/painel';
+        else {
+          const response = await res.json();
+          alert('Erro: ' + response.message);
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

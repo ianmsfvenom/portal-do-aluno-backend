@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const saltRounds = process.env.SALT_ROUNDS || 12;
+const saltRounds = Number(process.env.SALT_ROUNDS) || 12;
 
 const encryptPassword = async (password) => {
     const salt = await bcrypt.genSalt(saltRounds);

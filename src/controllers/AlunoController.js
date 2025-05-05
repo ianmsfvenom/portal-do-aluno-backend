@@ -1,43 +1,23 @@
-const HttpError = require('../errors/HttpError');
+const path = require('path');
 const prisma = require('../config/prisma');
-const jwt = require('jsonwebtoken')
+const { encryptPassword } = require('../utils/password-utils')
 
 module.exports = new class AlunoController {
-    async getCurso(req, res, next) {
-        const Authorization = req.headers.authorization;
-        const secretKey = readFileSync('./private.key', 'utf-8');
-        const decodedToken = jwt.decode(Authorization, secretKey);
-        const aluno = await prisma.usuario.findFirst({ 
-            where: { id: decodedToken.id }, 
-            include: { turmas: { include: { curso: true } } } 
-        });
-        if (!aluno) return next(new HttpError(404, 'Aluno nao encontrado'));
-        return res.json(aluno.turmas)
+    register = async (req, res) => {
+        res.sendFile(path.resolve('./public/html/inscricao-aluno.html'));
     }
 
-    async getTurma(req, res, next) {
-        const Authorization = req.headers.authorization;
-        const secretKey = readFileSync('./private.key', 'utf-8');
-        const decodedToken = jwt.decode(Authorization, secretKey);
-        const aluno = await prisma.usuario.findFirst({ 
-            where: { id: decodedToken.id }, 
-            include: { turmas: true }
-        });
-        if (!aluno) return next(new HttpError(404, 'Aluno nao encontrado'));
-        return res.json(aluno.turmas)
+    payment = async (req, res) => {
+        res.sendFile(path.resolve('./public/html/pagamento.html'));
     }
 
-    async getModulos(req, res, next) {
-        const { curso_id } = req.params;
-        const Authorization = req.headers.authorization;
-        const secretKey = readFileSync('./private.key', 'utf-8');
-        const decodedToken = jwt.decode(Authorization, secretKey);
-        const aluno = await prisma.usuario.findFirst({ 
-            where: { id: decodedToken.id }, 
-            include: { turmas: { include: { curso: { include: { modulos: true} } } } }
-        });
-        if (!aluno) return next(new HttpError(404, 'Aluno nao encontrado'));
-        const modulos = aluno.turmas.filter(turma => turma.curso.id == curso_id)[0].curso.modulos;
-        return res.json(modulos);
+    
+    async create(req, next, res) {
+        const { nome, email, senha, plano_id } = req.body;
+
+        const encryptedPassword = await encryptPassword(senha);
+        
+        const newUser = await prisma.usuario.create({ data: { nome, email, senha: encryptedPassword, tipo: 'aluno', plano_id } });
+        return res.json(newUser);
     }
 }

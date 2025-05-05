@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(120deg, #012f61, #01102a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 510px;
+    height: 510px;
+    background-image: url(../img/logoBrancoSF.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: -1;
+    opacity: 0.6;
+    transform: scaleX(1);
+}
+
+.imgLogo {
+    width: 200px;
+    margin-top: 2px;
+    margin-bottom: 6px;
+    border-radius: 5px;
+}
+
+.login-container {
+    background-color: #040922;
+    border: 2px solid #06b9b0;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(9, 161, 255, 0.776);
+    padding: 50px;
+    width: 500px;
+    text-align: center;
+}
+
+.login-container h2 {
+    margin: 18px;
+    font-size: 30px;
+    color: #ffffff;
+}
+
+.input {
+    background-color: #050e3a92;
+    color: #ffffff;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #00bbff;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.input-field:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.btn-login {
+    background-color: #00fce7;
+    color: #03162b;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(9, 143, 246, 0.737);
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.btn-login:hover {
+    color: #00fce7;
+    background-color: #a5d5ff00;
+    border: solid 2px #00fce7;
+    transform: scale(1.1);
+    box-shadow: 0 4px 25px rgba(9, 143, 246, 0.737);
+}
+
+.forgot-password {
+    margin-top: 22px;
+    font-size: 18px;
+}
+
+.forgot-password a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    color: #00b7ff;
+    text-decoration: underline;
+}

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/IconAbaID.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/styleAlunoBasico.css">
+    <title>Instituto Digital - Painel do Aluno</title>
+</head>
+
+<body>
+
+    <button class="toggle-theme" onclick="toggleTheme()">☀️</button>
+
+    <span class="btnSidebar" onclick="toggleSidebar()">☰</span>
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <span class="btnFechar" onclick="toggleSidebar()">×</span><br><br>
+        <a href="cursos.html"><img src="/img/btnPlayBranco.png" alt="icone"> Meus Cursos</a>
+        <a href="#"><img src="/img/estrelaBranco.png" alt="icone"> Cursos Exclusivos</a>
+        <a href="#"><img src="/img/certificadoBranco.png" alt="icone"> Certificados</a>
+        <a href="#"><img src="/img/planoBranco.png" alt="icone"> Planos</a>
+        <a href="#"><img src="/img/cadastroBranco.png" alt="icone"> Cadastro</a>
+        <a href="#"><img src="/img/aperto-de-maoBranco.png" alt="icone"> Parcerias</a>
+        <a href="#"><img src="/img/configuracoesBranco.png" alt="icone"> Configurações</a>
+        <a href="#"><img src="/img/perguntaBranco.png" alt="icone"> Suporte</a>
+        <a href="indexLogin.html"><img src="/img/sairBranco.png" alt="icone"> Sair</a>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="painelEstudante">
+        <h1>Painel do Aluno - Básico</h1>
+        <p><a href="index.html">Inicio</a>>>Meu Painel</p>
+        <p>Seja um apoiador do Instituto Digital, remova os anúncios do site, tenha créditos para emissão de
+            certificados e outros benefícios </p><br><br>
+        <div class="course-grid">
+            <!-- Meus Cursos -->
+            <div class="cartaoCursos">
+                <img src="/img/btnPlay.png" alt="cursos">
+                <h3>Meus Cursos</h3><br>
+                <a href="cursos.html" class="btn-course">Ver Cursos</a>
+            </div>
+
+            <!-- Cursos Exclusivos -->
+            <div class="cartaoCursos">
+                <div class="exclusivo">
+                    <img src="/img/estrela.png" alt="cursos">
+                    <h3>Cursos Exclusivos</h3><br>
+                    <a href="#" class="btn-course">Cursos Exclusivos</a>
+                </div>
+            </div>  
+
+            <!-- Certificados -->
+            <div class="cartaoCursos">
+                <img src="/img/certificado.png" alt="certificados">
+                <h3>Certificados</h3><br>
+                <a href="#" class="btn-course">Certificados</a>
+            </div>
+
+            <!-- Planos -->
+            <div class="cartaoCursos">
+                <img src="/img/plano.png" alt="Planos">
+                <h3>Planos</h3><br>
+                <a href="#" class="btn-course">Mudar Plano</a>
+            </div>
+
+            <!-- Cadastro -->
+            <div class="cartaoCursos">
+                <img src="/img/cadastro.png" alt="cadastro">
+                <h3>Cadastro</h3><br>
+                <a href="#" class="btn-course">Ver Cadastro</a>
+            </div>
+
+            <!-- Parcerias -->
+            <div class="cartaoCursos">
+                <img src="/img/aperto-de-mao.png" alt="parcerias">
+                <h3>Parcerias</h3><br>
+                <a href="#" class="btn-course">Ver Parcerias</a>
+            </div>
+
+            <!-- Configurações -->
+            <div class="cartaoCursos">
+                <img src="/img/configuracoes.png" alt="configurações">
+                <h3>Configurações</h3><br>
+                <a href="#" class="btn-course">Configurações</a>
+            </div>
+
+            <!-- Suporte -->
+            <div class="cartaoCursos">
+                <img src="/img/pergunta.png" alt="suporte">
+                <h3>Suporte</h3><br>
+                <a href="#" class="btn-course">Suporte</a>
+            </div>
+
+            <!-- Sair -->
+            <div class="cartaoCursos">
+                <img src="/img/sair.png" alt="Sair">
+                <h3>Sair</h3><br>
+                <a href="indexLogin.html" class="btn-course">Sair</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="wrapper">
+        <div class="painelEstudante"></div>
+        <footer>
+            <p>&copy; 2025 Instituto Digital. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Função para abrir e fechar a sidebar
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var studentPanel = document.querySelector('.student-panel');
+
+            if (sidebar.style.left === '-250px') {
+                sidebar.style.left = '0';
+                studentPanel.style.marginLeft = '250px';
+            } else {
+                sidebar.style.left = '-250px';
+                studentPanel.style.marginLeft = '0';
+            }
+        }
+
+        // Função para escurece
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var painel = document.querySelector('.painelEstudante');
+            var overlay = document.getElementById('overlay');
+
+            if (sidebar.style.left === '-250px' || sidebar.style.left === '') {
+                sidebar.style.left = '0';
+                painel.style.marginLeft = '250px';
+                overlay.classList.add('active');
+            } else {
+                sidebar.style.left = '-250px';
+                painel.style.marginLeft = '0';
+                overlay.classList.remove('active');
+            }
+        }
+
+        // Função Muda tema
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.querySelector('.toggle-theme');
+
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                btn.textContent = '🌙';
+            } else {
+                btn.textContent = '☀️';
+            }
+        }
+
+        document.querySelector('.exclusivo').classList.add('bloqueado');
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/IconAbaID.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/styleCursos.css">
+    <title>Instituto Digital - Painel do Aluno</title>
+</head>
+
+<body>
+
+    <button class="toggle-theme" onclick="toggleTheme()">☀️</button>
+
+    <span class="btnSidebar" onclick="toggleSidebar()">☰</span>
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <span class="btnFechar" onclick="toggleSidebar()">×</span><br><br>
+        <a href="cursos.html"><img src="/img/btnPlayBranco.png" alt="icone"> Meus Cursos</a>
+        <a href="#"><img src="/img/estrelaBranco.png" alt="icone"> Cursos Exclusivos</a>
+        <a href="#"><img src="/img/certificadoBranco.png" alt="icone"> Certificados</a>
+        <a href="#"><img src="/img/planoBranco.png" alt="icone"> Planos</a>
+        <a href="#"><img src="/img/cadastroBranco.png" alt="icone"> Cadastro</a>
+        <a href="#"><img src="/img/aperto-de-maoBranco.png" alt="icone"> Parcerias</a>
+        <a href="#"><img src="/img/configuracoesBranco.png" alt="icone"> Configurações</a>
+        <a href="#"><img src="/img/perguntaBranco.png" alt="icone"> Suporte</a>
+        <a href="indexLogin.html"><img src="/img/sairBranco.png" alt="icone"> Sair</a>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="painelEstudante">
+        <h1>Painel do Aluno - Meus Cursos</h1>
+        <p><a href="index.html">Inicio</a>>><a href="painelAlunoBasico.html">Painel do aluno</a>>>Meus Cursos</p>
+        <p>Seja um apoiador do Instituto Digital, remova os anúncios do site, tenha créditos para emissão de
+            certificados e outros benefícios </p><br><br>
+        <div class="course-grid">
+            <!-- Curso 1 -->
+            <div class="curso-box">
+                <div class="curso-1">
+                    <h3>Curso de HTML</h3>
+                    <ul>
+                        <li>Tags principais</li>
+                        <li>Semântica</li>
+                        <li>Formulários</li>
+                        <li>Boas práticas</li>
+                    </ul>
+                    <a href="/pagAula.html" class="btn-iniciar">Iniciar</a>
+                </div>
+            </div>
+
+            <!-- Curso 2 -->
+            <div class="curso-box">
+                <div class="curso-2">
+                    <h3>Curso de CSS</h3>
+                    <ul>
+                        <li>Seletores</li>
+                        <li>Flexbox</li>
+                        <li>Grid</li>
+                        <li>Responsividade</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Curso 3 -->
+            <div class="curso-box">
+                <div class="curso-3">
+                    <h3>Curso de JavaScript</h3>
+                    <ul>
+                        <li>Variáveis</li>
+                        <li>Eventos</li>
+                        <li>DOM</li>
+                        <li>Funções</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Curso 4 -->
+            <div class="curso-box">
+                <div class="curso-4">
+                    <h3>Curso de Python</h3>
+                    <ul>
+                        <li>Sintaxe</li>
+                        <li>Funções</li>
+                        <li>Estruturas</li>
+                        <li>Automação</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Curso 5 -->
+            <div class="curso-box">
+                <div class="curso-5">
+                    <h3>Curso de Git e GitHub</h3>
+                    <ul>
+                        <li>Versionamento</li>
+                        <li>Comandos básicos</li>
+                        <li>Branches</li>
+                        <li>Colaboração</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Curso 6 -->
+            <div class="curso-box">
+                <div class="curso-6">
+                    <h3>Curso de SQL</h3>
+                    <ul>
+                        <li>SELECT / WHERE</li>
+                        <li>JOINs</li>
+                        <li>Subconsultas</li>
+                        <li>CRUD</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Curso 7 -->
+            <div class="curso-box">
+                <div class="curso-7">
+                    <h3>Curso de Design</h3>
+                    <ul>
+                        <li>UX/UI</li>
+                        <li>Cores e Tipografia</li>
+                        <li>Wireframes</li>
+                        <li>Figma</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Curso 8 -->
+            <div class="curso-box">
+                <div class="curso-8">
+                    <h3>Curso de Marketing Digital</h3>
+                    <ul>
+                        <li>Redes Sociais</li>
+                        <li>SEO</li>
+                        <li>Tráfego pago</li>
+                        <li>Copywriting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função para abrir e fechar a sidebar
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var studentPanel = document.querySelector('.student-panel');
+
+            if (sidebar.style.left === '-250px') {
+                sidebar.style.left = '0';
+                studentPanel.style.marginLeft = '250px';
+            } else {
+                sidebar.style.left = '-250px';
+                studentPanel.style.marginLeft = '0';
+            }
+        }
+
+        // Função para escurece
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var painel = document.querySelector('.painelEstudante');
+            var overlay = document.getElementById('overlay');
+
+            if (sidebar.style.left === '-250px' || sidebar.style.left === '') {
+                sidebar.style.left = '0';
+                painel.style.marginLeft = '250px';
+                overlay.classList.add('active');
+            } else {
+                sidebar.style.left = '-250px';
+                painel.style.marginLeft = '0';
+                overlay.classList.remove('active');
+            }
+        }
+
+        // Função Muda tema
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.querySelector('.toggle-theme');
+
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                btn.textContent = '🌙';
+            } else {
+                btn.textContent = '☀️';
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

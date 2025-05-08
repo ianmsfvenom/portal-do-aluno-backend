@@ -261,7 +261,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\USER\\Documents\\atividade-pontuada\\generated\\prisma",
+      "value": "C:\\Users\\Ian Pablo\\Documents\\portal-do-aluno-backend\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -275,11 +275,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\USER\\Documents\\atividade-pontuada\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Ian Pablo\\Documents\\portal-do-aluno-backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma",
@@ -289,12 +289,11 @@ const config = {
     "db"
   ],
   "activeProvider": "mysql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": null
+        "value": "mysql://root:@localhost:3306/avaliacao"
       }
     }
   },

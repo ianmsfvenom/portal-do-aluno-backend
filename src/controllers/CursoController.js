@@ -32,7 +32,7 @@ module.exports = new class CursoController {
     }
     async list(req, res, next) {
         try {
-            const cursos = await prisma.curso.findMany({ include: { modulo: true } });
+            const cursos = await prisma.curso.findMany();
             return res.json(cursos);
         } catch (error) {
             next(new HttpError(500, 'Erro ao listar curso'));

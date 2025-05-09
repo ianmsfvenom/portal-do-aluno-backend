@@ -55,4 +55,9 @@ module.exports = new class LoginController {
 
         return res.json({ isLogged: true });
     }
+    
+    logout(req, res, next) {
+        res.clearCookie('Authorization');
+        res.redirect('/login');
+    }
 }

@@ -260,7 +260,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Ian Pablo\\Documents\\portal-do-aluno-backend\\generated\\prisma",
+      "value": "C:\\Users\\USER\\Documents\\portal-do-aluno-backend\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -274,7 +274,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Ian Pablo\\Documents\\portal-do-aluno-backend\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\USER\\Documents\\portal-do-aluno-backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

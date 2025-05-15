@@ -22,8 +22,9 @@ module.exports =  new class VideoController {
         }
     }
 
-    async list(req, res) {
-        const videos = await prisma.video.findMany({ include: { modulo: true } });
+    async search(req, res) {
+        const { modulo } = req.query;
+        const videos = await prisma.video.findMany({ where: { modulo_id: Number(modulo) }, include: { progressos_alunos: true } });
         return res.json(videos);
     }
 }

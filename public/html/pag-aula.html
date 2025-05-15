@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="img/IconAbaID.png" type="image/x-icon">
-    <link rel="stylesheet" href="css/styleAula.css">
+    <link rel="shortcut icon" href="/img/IconAbaID.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/styleAula.css">
     <title>Aula - Instituto Digital</title>
 </head>
 
@@ -15,18 +15,43 @@
             <h2>Módulo 1</h2>
             <div class="linhaHorizontal"></div>
             <ul>
-                <li><a href="#">Aula 1 - Introdução</a></li>
-                <li><a href="#">Aula 2 - Conceitos Básicos</a></li>
-                <li><a href="#">Aula 3 - Aplicações</a></li>
-                <li><a href="#">Aula 4 - Projeto</a></li>
+                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 1 - Introdução</a></label></li>
+                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 2 - Conceitos Básicos</a></label>
+                </li>
+                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 3 - Aplicações</a></label></li>
+                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 4 - Projeto</a></label></li>
             </ul>
+
+            <h2>Módulo 2</h2>
+            <div class="linhaHorizontal"></div>
+            <ul>
+                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 1 - Introdução</a></label></li>
+                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 2 - Conceitos Básicos</a></label>
+                </li>
+                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 3 - Aplicações</a></label></li>
+                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 4 - Projeto</a></label></li>
+            </ul>
+
+            <h2>Provas</h2>
+            <div class="linhaHorizontal"></div>
+            <ul>
+                <li><label><input type="checkbox" class="check-aula"> <a href="#">Prova 1</a></label></li>
+                <li><label><input type="checkbox" class="check-aula"> <a href="#">Prova 2</a></label></li>
+                <li><label><input type="checkbox" class="check-aula"> <a href="#">Prova 3</a></label></li>
+            </ul>
+
+            <p style="margin-top: 20px; font-weight: bold;">Progresso: <span id="porcentagem">0%</span></p>
         </aside>
 
         <main class="videoAula">
-            <div class="videoContainer">
-                <iframe src="https://www.youtube.com/embed/0Ba6PVHMa0A?si=HPAsDNsXawi6BD_Q" frameborder="0" allowfullscreen>
-                </iframe>
+            <div class="progressBarContainer">
+                <div class="progressBar" id="progressBar"></div>
             </div>
+            <div class="videoContainer">
+                <iframe id="player" src="https://www.youtube.com/embed/0Ba6PVHMa0A?enablejsapi=1" frameborder="0"
+                    allowfullscreen></iframe>
+            </div>
+            <a href="#" class="btnSeguir">Seguir para a proxima aula</a>
             <h1 class="tituloAula">Aula 1 - Introdução</h1>
             <p class="descricaoAula">
                 Nesta aula você vai conhecer os fundamentos do curso, entender a metodologia e se preparar para o
@@ -34,6 +59,117 @@
             </p>
         </main>
     </div>
+
+    <script>
+        // 1. Carrega a API do YouTube
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+
+        // 2. Cria o player quando a API estiver pronta
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        // 3. Atualiza a barra de progresso
+        function onPlayerReady(event) {
+            setInterval(() => {
+                if (player && player.getDuration) {
+                    const duration = player.getDuration();
+                    const currentTime = player.getCurrentTime();
+                    const progress = (currentTime / duration) * 100;
+                    document.getElementById('progressBar').style.width = progress + '%';
+                }
+            }, 1000); // atualiza a cada segundo
+        }
+
+        // Atualiza a porcentagem de aulas concluídas
+        function atualizarProgressoAulas() {
+            const checkboxes = document.querySelectorAll('.check-aula');
+            const total = checkboxes.length;
+            let marcados = 0;
+
+            checkboxes.forEach((cb, index) => {
+                if (cb.checked) marcados++;
+                // Salva no localStorage
+                localStorage.setItem(`aula-${index}`, cb.checked);
+            });
+
+            const porcentagem = Math.round((marcados / total) * 100);
+            document.getElementById('porcentagem').textContent = porcentagem + '%';
+        }
+
+        // Restaura o estado dos checkboxes do localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('.check-aula');
+
+            checkboxes.forEach((cb, index) => {
+                const salvo = localStorage.getItem(`aula-${index}`);
+                if (salvo === 'true') {
+                    cb.checked = true;
+                }
+                cb.addEventListener('change', atualizarProgressoAulas);
+            });
+
+            atualizarProgressoAulas();
+        });
+    </script>
+
+    <script>
+        const urlString = window.location.search;
+        const searchParams = new URLSearchParams(urlString)
+        const paramValue = searchParams.get('curso');
+        const hasParam = searchParams.has('curso');
+
+        if (!hasParam) {
+            window.location.href = `/painel`;
+        }
+
+        fetch(`/modulo/search?curso=${paramValue}`).then(async res => {
+            if (!res.ok) return window.location.href = `/painel`;
+            const modulos = await res.json();
+            const sidebar = document.getElementsByClassName('sidebar')[0];
+            modulos.forEach(async modulo => {
+                try {
+                    const videos = await fetch(`/video/search?modulo=${modulo.id}`).then(res => res.json());
+
+                    const titulo = document.createElement('h2');
+                    titulo.textContent = modulo.titulo;
+
+                    const linha = document.createElement('div');
+                    linha.className = 'linhaHorizontal';
+
+                    const list = document.createElement('ul');
+                    videos.forEach(video => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<label><input type="checkbox" class="check-aula"><a href="#">${video.titulo}</a></label>`;
+                        li.addEventListener('click', () => {
+                            document.getElementById('player').src = video.url_video;
+                            document.querySelector('.tituloAula').textContent = video.titulo;
+                            document.querySelector('.descricaoAula').textContent = video.descricao;
+                        })
+                        list.appendChild(li);
+                    })
+
+                    sidebar.appendChild(titulo);
+                    sidebar.appendChild(linha);
+                    sidebar.appendChild(list);
+
+                } catch (e) {
+                    alert('Erro ao buscar videos');
+                }
+            })
+        })
+    </script>
+
+
 </body>
 
 </html>

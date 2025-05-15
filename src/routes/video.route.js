@@ -6,6 +6,6 @@ const videoValidator = require('../validators/VideoValidator');
 
 router.post('/admin/create', checkAdminMiddleware, checkLoginMiddleware, videoValidator.create, videoController.create);
 router.post('/admin/delete', checkAdminMiddleware, checkLoginMiddleware, videoValidator.delete, videoController.delete);
-router.get('/admin/list', checkAdminMiddleware, checkLoginMiddleware, videoController.list);
+router.get('/search', checkLoginMiddleware, videoValidator.search, videoController.search);
 
 module.exports = router;

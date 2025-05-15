@@ -32,9 +32,10 @@ module.exports = new class ModuloController {
         }
     }
 
-    async list(req, res, next) {
+    async search(req, res, next) {
+        const { curso } = req.query;
         try {
-            const modulos = await prisma.modulo.findMany({ include: { curso: true } });
+            const modulos = await prisma.modulo.findMany({ where: { curso_id: Number(curso) } });
             return res.json(modulos);
         } catch (error) {
             next(new HttpError(500, 'Erro ao listar modulo'));

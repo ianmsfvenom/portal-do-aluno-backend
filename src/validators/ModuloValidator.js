@@ -21,4 +21,11 @@ module.exports = new class ModuloValidator {
         if(isNaN(id) || isNaN(curso_id) || isNaN(ordem)) return next(new HttpError(400, 'Id, curso e ordem devem ser números'));
         next();
     }
+
+    search(req, res, next) {
+        const { curso } = req.query;
+        if (!curso) return next(new HttpError(400, 'Curso obrigatório'));
+        if(isNaN(curso)) return next(new HttpError(400, 'Curso deve ser um número'));
+        next();
+    }
 }

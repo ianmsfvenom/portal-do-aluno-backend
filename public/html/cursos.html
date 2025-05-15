@@ -19,7 +19,7 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <span class="btnFechar" onclick="toggleSidebar()">×</span><br><br>
-        <a href="cursos.html"><img src="/img/btnPlayBranco.png" alt="icone"> Meus Cursos</a>
+        <a href="/painel/cursos"><img src="/img/btnPlayBranco.png" alt="icone"> Meus Cursos</a>
         <a href="#"><img src="/img/estrelaBranco.png" alt="icone"> Cursos Exclusivos</a>
         <a href="#"><img src="/img/certificadoBranco.png" alt="icone"> Certificados</a>
         <a href="#"><img src="/img/planoBranco.png" alt="icone"> Planos</a>
@@ -33,118 +33,16 @@
     <!-- Conteúdo Principal -->
     <div class="painelEstudante">
         <h1>Painel do Aluno - Meus Cursos</h1>
-        <p><a href="index.html">Inicio</a>>><a href="painelAlunoBasico.html">Painel do aluno</a>>>Meus Cursos</p>
+        <p><a href="/painel">Inicio</a>>><a href="painelAlunoBasico.html">Painel do aluno</a>>>Meus Cursos</p>
         <p>Seja um apoiador do Instituto Digital, remova os anúncios do site, tenha créditos para emissão de
             certificados e outros benefícios </p><br><br>
         <div class="course-grid">
-            <!-- Curso 1 -->
-            <div class="curso-box">
-                <div class="curso-1">
-                    <h3>Curso de HTML</h3>
-                    <ul>
-                        <li>Tags principais</li>
-                        <li>Semântica</li>
-                        <li>Formulários</li>
-                        <li>Boas práticas</li>
-                    </ul>
-                    <a href="/pagAula.html" class="btn-iniciar">Iniciar</a>
-                </div>
-            </div>
-
-            <!-- Curso 2 -->
-            <div class="curso-box">
-                <div class="curso-2">
-                    <h3>Curso de CSS</h3>
-                    <ul>
-                        <li>Seletores</li>
-                        <li>Flexbox</li>
-                        <li>Grid</li>
-                        <li>Responsividade</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Curso 3 -->
-            <div class="curso-box">
-                <div class="curso-3">
-                    <h3>Curso de JavaScript</h3>
-                    <ul>
-                        <li>Variáveis</li>
-                        <li>Eventos</li>
-                        <li>DOM</li>
-                        <li>Funções</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Curso 4 -->
-            <div class="curso-box">
-                <div class="curso-4">
-                    <h3>Curso de Python</h3>
-                    <ul>
-                        <li>Sintaxe</li>
-                        <li>Funções</li>
-                        <li>Estruturas</li>
-                        <li>Automação</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Curso 5 -->
-            <div class="curso-box">
-                <div class="curso-5">
-                    <h3>Curso de Git e GitHub</h3>
-                    <ul>
-                        <li>Versionamento</li>
-                        <li>Comandos básicos</li>
-                        <li>Branches</li>
-                        <li>Colaboração</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Curso 6 -->
-            <div class="curso-box">
-                <div class="curso-6">
-                    <h3>Curso de SQL</h3>
-                    <ul>
-                        <li>SELECT / WHERE</li>
-                        <li>JOINs</li>
-                        <li>Subconsultas</li>
-                        <li>CRUD</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Curso 7 -->
-            <div class="curso-box">
-                <div class="curso-7">
-                    <h3>Curso de Design</h3>
-                    <ul>
-                        <li>UX/UI</li>
-                        <li>Cores e Tipografia</li>
-                        <li>Wireframes</li>
-                        <li>Figma</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Curso 8 -->
-            <div class="curso-box">
-                <div class="curso-8">
-                    <h3>Curso de Marketing Digital</h3>
-                    <ul>
-                        <li>Redes Sociais</li>
-                        <li>SEO</li>
-                        <li>Tráfego pago</li>
-                        <li>Copywriting</li>
-                    </ul>
-                </div>
-            </div>
+            
         </div>
     </div>
 
     <script>
+        
         // Função para abrir e fechar a sidebar
         function toggleSidebar() {
             var sidebar = document.getElementById('sidebar');
@@ -190,6 +88,23 @@
             }
         }
 
+        fetch('/curso/list').then(async res => {
+            const cursos = await res.json();
+            const grid = document.querySelector('.course-grid');
+            cursos.forEach(curso => {
+                grid.innerHTML += `
+                    <div class="curso-box">
+                        <div class="curso-${curso.id}">
+                            <h3>${curso.titulo}</h3>
+                            <h4>${curso.categoria}</h4>
+                            <h4>${curso.carga_horaria}</h4>
+                            <p>${curso.descricao}</p>
+                            <a href="/painel/aula?curso=${curso.id}" class="btn-iniciar">Iniciar</a>
+                        </div>
+                    </div>
+                `
+            })
+        })
 
     </script>
 </body>

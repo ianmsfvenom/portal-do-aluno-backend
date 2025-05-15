@@ -206,7 +206,7 @@ footer::before {
     right: 0;
     width: 100px;
     height: 100px;
-    background-image: url(../img/logoBrancoSF.png);
+    background-image: url(../IMG/logoBrancoSF.png);
     background-size: contain;
     background-repeat: no-repeat;
     z-index: 0;

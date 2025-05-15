@@ -6,5 +6,6 @@ const loginValidator = require('../validators/LoginValidator');
 router.get('/', loginController.index);
 router.post('/', loginValidator.makeLogin, loginController.makeLogin);
 router.get('/check-login', loginController.checkLogin);
+router.get('/logout', loginController.logout);
 
 module.exports = router;

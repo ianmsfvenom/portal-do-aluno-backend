@@ -26,4 +26,8 @@ module.exports = new class PainelController {
     async cursos(req, res) {
         res.sendFile(path.resolve('./public/html/cursos.html'));
     }
+
+    async aula(req, res) {
+        res.sendFile(path.resolve('./public/html/pag-aula.html'));
+    }
 }

@@ -15,4 +15,11 @@ module.exports = new class VideoValidator {
         if(isNaN(id)) return next(new HttpError(400, 'Id deve ser um numero'));
         next();
     }   
+
+    search(req, res, next) {
+        const { modulo } = req.body;
+        if (!modulo) return next(new HttpError(400, 'Modulo obrigatório'));
+        if(isNaN(modulo)) return next(new HttpError(400, 'Modulo deve ser um número'));
+        next();
+    }
 }

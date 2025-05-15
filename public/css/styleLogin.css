@@ -20,7 +20,7 @@ body::before {
     right: 0;
     width: 510px;
     height: 510px;
-    background-image: url(../img/logoBrancoSF.png);
+    background-image: url(../IMG/logoBrancoSF.png);
     background-size: contain;
     background-repeat: no-repeat;
     z-index: -1;

@@ -45,4 +45,60 @@ const { encryptPassword } = require('../utils/password-utils');
         ]
     })
 
+    await prisma.modulo.createMany({
+        data: [
+            { curso_id: 1, ordem: 1, titulo: 'Introdução ao HTML 1' },
+            { curso_id: 1, ordem: 2, titulo: 'Introdução ao HTML 2' },
+            { curso_id: 1, ordem: 3, titulo: 'Introdução ao HTML 3' },
+            { curso_id: 2, ordem: 1, titulo: 'Introdução ao CSS 1' },
+            { curso_id: 2, ordem: 2, titulo: 'Introdução ao CSS 2' },
+            { curso_id: 2, ordem: 3, titulo: 'Introdução ao CSS 3' },
+            { curso_id: 3, ordem: 1, titulo: 'Introdução ao JavaScript 1' },
+            { curso_id: 3, ordem: 2, titulo: 'Introdução ao JavaScript 2' },
+            { curso_id: 3, ordem: 3, titulo: 'Introdução ao JavaScript 3' },
+        ]
+    })
+
+    await prisma.video.createMany({
+        data: [
+            { url_video: 'https://www.youtube.com/embed/sj0p9O85AIg?si=nIayuCKvR6D9Pzl6', duracao: 1199, modulo_id: 1, titulo: 'Aula 1' },
+            { url_video: 'https://www.youtube.com/embed/MOd8PCyEB88?si=LoJMvpjhJbtFkMAd', duracao: 789, modulo_id: 1, titulo: 'Aula 2' },
+            { url_video: 'https://www.youtube.com/embed/1ntb19o-2MI?si=nwBRkmYsHlEJ8nJv', duracao: 1358, modulo_id: 1, titulo: 'Aula 3' },
+            { url_video: 'https://www.youtube.com/embed/RiGo7BN1Wps?si=Dsmx-i9VH6JqbH_m', duracao: 926, modulo_id: 2, titulo: 'Aula 4' },
+            { url_video: 'https://www.youtube.com/embed/bzWtE7GFi0Y?si=xKb2A5t-fe3_phUC', duracao: 716, modulo_id: 2, titulo: 'Aula 5' },
+            { url_video: 'https://www.youtube.com/embed/Sl0edqPVrGg?si=3mlPUveL_IOsFleX', duracao: 430, modulo_id: 2, titulo: 'Aula 6' },
+            { url_video: 'https://www.youtube.com/embed/eb5tPfOeexI?si=1Z83UAOQRXf0I7co', duracao: 802, modulo_id: 3, titulo: 'Aula 7' },
+            { url_video: 'https://www.youtube.com/embed/2FvW812Up1U?si=0DIVqRPMi8PwkWK3', duracao: 2610, modulo_id: 3, titulo: 'Aula 8' },
+            { url_video: 'https://www.youtube.com/embed/tTUdJlcjEo4?si=juyVrXVaMaMmXNpQ', duracao: 454, modulo_id: 3, titulo: 'Aula 9' },
+        ]
+    })
+
+    await prisma.apostila.createMany({
+        data: [
+            { modulo_id: 1, titulo: 'Apostila 1', arquivo_url: 'https://www.google.com.br' },
+            { modulo_id: 1, titulo: 'Apostila 2', arquivo_url: 'https://www.google.com.br' },
+            { modulo_id: 1, titulo: 'Apostila 3', arquivo_url: 'https://www.google.com.br' },
+            { modulo_id: 2, titulo: 'Apostila 1', arquivo_url: 'https://www.google.com.br' },
+            { modulo_id: 2, titulo: 'Apostila 2', arquivo_url: 'https://www.google.com.br' },
+            { modulo_id: 2, titulo: 'Apostila 3', arquivo_url: 'https://www.google.com.br' },
+            { modulo_id: 3, titulo: 'Apostila 1', arquivo_url: 'https://www.google.com.br' },
+            { modulo_id: 3, titulo: 'Apostila 2', arquivo_url: 'https://www.google.com.br' },
+            { modulo_id: 3, titulo: 'Apostila 3', arquivo_url: 'https://www.google.com.br' },
+        ]
+    })
+
+    await prisma.avaliacao.createMany({
+        data: [
+            { modulo_id: 1, descricao: 'Primeira avaliação', titulo: 'Avaliação 1' },
+            { modulo_id: 1, descricao: 'Segunda avaliação', titulo: 'Avaliação 2' },
+            { modulo_id: 1, descricao: 'Terceira avaliação', titulo: 'Avaliação 3' },
+            { modulo_id: 2, descricao: 'Primeira avaliação', titulo: 'Avaliação 1' },
+            { modulo_id: 2, descricao: 'Segunda avaliação', titulo: 'Avaliação 2' },
+            { modulo_id: 2, descricao: 'Terceira avaliação', titulo: 'Avaliação 3' },
+            { modulo_id: 3, descricao: 'Primeira avaliação', titulo: 'Avaliação 1' },
+            { modulo_id: 3, descricao: 'Segunda avaliação', titulo: 'Avaliação 2' },
+            { modulo_id: 3, descricao: 'Terceira avaliação', titulo: 'Avaliação 3' },
+        ]
+    })
+
 })()

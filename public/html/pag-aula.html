@@ -98,7 +98,6 @@
 
             checkboxes.forEach((cb, index) => {
                 if (cb.checked) marcados++;
-                // Salva no localStorage
                 localStorage.setItem(`aula-${index}`, cb.checked);
             });
 
@@ -106,20 +105,16 @@
             document.getElementById('porcentagem').textContent = porcentagem + '%';
         }
 
-        // Restaura o estado dos checkboxes do localStorage
-        document.addEventListener('DOMContentLoaded', () => {
-            const checkboxes = document.querySelectorAll('.check-aula');
+        const checkboxes = document.querySelectorAll('.check-aula');
 
-            checkboxes.forEach((cb, index) => {
-                const salvo = localStorage.getItem(`aula-${index}`);
-                if (salvo === 'true') {
-                    cb.checked = true;
-                }
-                cb.addEventListener('change', atualizarProgressoAulas);
-            });
-
-            atualizarProgressoAulas();
+        checkboxes.forEach((cb, index) => {
+            const salvo = localStorage.getItem(`aula-${index}`);
+            cb.checked = Boolean(salvo);
+            cb.addEventListener('change', atualizarProgressoAulas);
         });
+
+        atualizarProgressoAulas();
+        
     </script>
 
     <script>
@@ -128,9 +123,9 @@
         const paramValue = searchParams.get('curso');
         const hasParam = searchParams.has('curso');
 
-        if (!hasParam) {
+        if (!hasParam) 
             window.location.href = `/painel`;
-        }
+        
 
         fetch(`/modulo/search?curso=${paramValue}`).then(async res => {
             if (!res.ok) return window.location.href = `/painel`;

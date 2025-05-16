@@ -59,4 +59,14 @@ module.exports = new class ProgressoAlunoController {
             next(new HttpError(500, 'Erro ao listar progresso do aluno'));
         }
     }
+
+    async updateByVideoId(req, res, next) {
+        const { video_id, progresso_video } = req.body;
+        try {
+            const updateProgressoAluno = await prisma.progressoAluno.update({ where: { video_id }, data: { progresso_video } });
+            return res.json(updateProgressoAluno);
+        } catch (error) {
+            next(new HttpError(500, 'Erro ao atualizar progresso do aluno'));
+        }
+    }
 }

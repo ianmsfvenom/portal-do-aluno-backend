@@ -12,35 +12,7 @@
 <body>
     <div class="aulaContainer">
         <aside class="sidebar">
-            <h2>Módulo 1</h2>
-            <div class="linhaHorizontal"></div>
-            <ul>
-                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 1 - Introdução</a></label></li>
-                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 2 - Conceitos Básicos</a></label>
-                </li>
-                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 3 - Aplicações</a></label></li>
-                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 4 - Projeto</a></label></li>
-            </ul>
 
-            <h2>Módulo 2</h2>
-            <div class="linhaHorizontal"></div>
-            <ul>
-                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 1 - Introdução</a></label></li>
-                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 2 - Conceitos Básicos</a></label>
-                </li>
-                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 3 - Aplicações</a></label></li>
-                <li><label><input type="checkbox" class="check-aula"> <a href="#">Aula 4 - Projeto</a></label></li>
-            </ul>
-
-            <h2>Provas</h2>
-            <div class="linhaHorizontal"></div>
-            <ul>
-                <li><label><input type="checkbox" class="check-aula"> <a href="#">Prova 1</a></label></li>
-                <li><label><input type="checkbox" class="check-aula"> <a href="#">Prova 2</a></label></li>
-                <li><label><input type="checkbox" class="check-aula"> <a href="#">Prova 3</a></label></li>
-            </ul>
-
-            <p style="margin-top: 20px; font-weight: bold;">Progresso: <span id="porcentagem">0%</span></p>
         </aside>
 
         <main class="videoAula">
@@ -61,12 +33,13 @@
     </div>
 
     <script>
+
         // 1. Carrega a API do YouTube
         var tag = document.createElement('script');
+        tag.id = 'iframe-api';
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
         var player;
 
         // 2. Cria o player quando a API estiver pronta
@@ -79,13 +52,24 @@
         }
 
         // 3. Atualiza a barra de progresso
-        function onPlayerReady(event) {
-            setInterval(() => {
+        function onPlayerReady(event) {            
+            setInterval(async () => {
                 if (player && player.getDuration) {
                     const duration = player.getDuration();
                     const currentTime = player.getCurrentTime();
                     const progress = (currentTime / duration) * 100;
                     document.getElementById('progressBar').style.width = progress + '%';
+                    
+                    try {
+                        await fetch(`/progresso-aluno/update/video`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                video_id: parseInt(localStorage.getItem('last_video')),
+                                progresso_video: parseInt(progress)
+                            })
+                        })
+                    } catch (error) {}
                 }
             }, 1000); // atualiza a cada segundo
         }
@@ -105,19 +89,16 @@
             document.getElementById('porcentagem').textContent = porcentagem + '%';
         }
 
-        const checkboxes = document.querySelectorAll('.check-aula');
-
-        checkboxes.forEach((cb, index) => {
-            const salvo = localStorage.getItem(`aula-${index}`);
-            cb.checked = Boolean(salvo);
-            cb.addEventListener('change', atualizarProgressoAulas);
-        });
-
-        atualizarProgressoAulas();
+        function mudarVideo(url, titulo = '', id) {
+            if (player && player.loadVideoByUrl) {
+                player.loadVideoByUrl(url);
+            } 
+            document.querySelector('.tituloAula').textContent = titulo;
+            document.querySelector('.descricaoAula').textContent = '';
+            localStorage.setItem('last_video', id);
+        }
         
-    </script>
 
-    <script>
         const urlString = window.location.search;
         const searchParams = new URLSearchParams(urlString)
         const paramValue = searchParams.get('curso');
@@ -131,10 +112,11 @@
             if (!res.ok) return window.location.href = `/painel`;
             const modulos = await res.json();
             const sidebar = document.getElementsByClassName('sidebar')[0];
-            modulos.forEach(async modulo => {
+            var isFirstVideo = true
+            for(const modulo of modulos) {
                 try {
                     const videos = await fetch(`/video/search?modulo=${modulo.id}`).then(res => res.json());
-
+                    
                     const titulo = document.createElement('h2');
                     titulo.textContent = modulo.titulo;
 
@@ -143,13 +125,12 @@
 
                     const list = document.createElement('ul');
                     videos.forEach(video => {
+                        if(isFirstVideo) {
+                            mudarVideo(video.url_video, video.titulo, video.id);
+                            isFirstVideo = false
+                        }
                         const li = document.createElement('li');
-                        li.innerHTML = `<label><input type="checkbox" class="check-aula"><a href="#">${video.titulo}</a></label>`;
-                        li.addEventListener('click', () => {
-                            document.getElementById('player').src = video.url_video;
-                            document.querySelector('.tituloAula').textContent = video.titulo;
-                            document.querySelector('.descricaoAula').textContent = video.descricao;
-                        })
+                        li.innerHTML = `<label><input type="checkbox" class="check-aula"><a onclick="mudarVideo('${video.url_video}', '${video.titulo}', ${video.id}, )">${video.titulo}</a></label>`;
                         list.appendChild(li);
                     })
 
@@ -160,11 +141,21 @@
                 } catch (e) {
                     alert('Erro ao buscar videos');
                 }
-            })
+            }
+            sidebar.innerHTML += 
+                '<p style="margin-top: 20px; font-weight: bold;">Progresso: <span id="porcentagem">0%</span></p>'
+            const checkboxes = document.querySelectorAll('.check-aula');
+            
+            checkboxes.forEach((cb, index) => {
+                const salvo = localStorage.getItem(`aula-${index}`);
+                cb.checked = salvo == 'true';
+                cb.addEventListener('change', atualizarProgressoAulas);
+            });
+            
+            atualizarProgressoAulas()
+            
         })
     </script>
-
-
 </body>
 
 </html>

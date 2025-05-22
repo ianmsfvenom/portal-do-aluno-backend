@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/IconAbaID.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/styleListaAluno.css">
+    <title>Instituto Digital - Lista de Alunos</title>
+</head>
+
+<body>
+
+    <button class="toggle-theme" onclick="toggleTheme()">☀️</button>
+
+    <span class="btnSidebar" onclick="toggleSidebar()">☰</span>
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <span class="btnFechar" onclick="toggleSidebar()">×</span><br><br>
+        <a href="cursos.html"><img src="/img/btnPlayBranco.png" alt="icone"> Aulas</a>
+        <a href="#"><img src="/img/professorBranco.png" alt="icone"> Lista de Professores</a>
+        <a href="#"><img src="/img/alunosBranco.png" alt="icone"> Lista de Alunos</a>
+        <a href="#"><img src="/img/eventosBranco.png" alt="icone"> Eventos</a>
+        <a href="#"><img src="/img/cadastroBranco.png" alt="icone"> Cadastros</a>
+        <a href="#"><img src="/img/aperto-de-maoBranco.png" alt="icone"> Parcerias</a>
+        <a href="#"><img src="/img/configuracoesBranco.png" alt="icone"> Configurações</a>
+        <a href="#"><img src="/img/perguntaBranco.png" alt="icone"> Suporte</a>
+        <a href="indexLogin.html"><img src="/img/sairBranco.png" alt="icone"> Sair</a>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="painelEstudante">
+        <h1>Painel do Administrador - Lista de Alunos</h1>
+        <p><a href="index.html">Inicio</a>>><a href="painelAdministrador.html">Painel Administrador</a>>>Lista Alunos
+        </p><br>
+        <div class="course-grid">
+
+            <!-- Pesquisa e Botões -->
+            <div class="course-grid">
+                <!-- Pesquisar -->
+                <div class="cartaoCursos pesquisar">
+                    <img src="/img/search.png" alt="pesquisa">
+                    <h3>Pesquisar</h3><br>
+                    <input type="text" name="pesquisar">
+                    <button onclick="">Pesquisar</button>
+                </div>
+
+                <!-- Btn Adicionar -->
+                <div class="cartaoCursos">
+                    <img src="/img/add.png" alt="adicionar">
+                    <h3>Adicionar Aluno</h3><br>
+                    <button onclick="">Adicionar Aluno</button>
+                </div>
+
+                <!-- Btn Remover -->
+                <div class="cartaoCursos">
+                    <img src="/img/menos.png" alt="remover">
+                    <h3>Remover Aluno</h3><br>
+                    <button onclick="">Remover Aluno</button>
+                </div>
+            </div>
+
+            <!-- Área para exibir os resultados da pesquisa -->
+            <div class="resultadosPesquisa" id="resultadosPesquisa" style="display:none;">
+                <h3>Resultados da Pesquisa:</h3>
+                <ul id="listaResultados">
+                    <!-- Os resultados da pesquisa serão adicionados aqui dinamicamente -->
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="wrapper">
+        <div class="painelEstudante"></div>
+        <footer>
+            <p>&copy; 2025 Instituto Digital. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Função para abrir e fechar a sidebar
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var studentPanel = document.querySelector('.student-panel');
+
+            if (sidebar.style.left === '-250px') {
+                sidebar.style.left = '0';
+                studentPanel.style.marginLeft = '250px';
+            } else {
+                sidebar.style.left = '-250px';
+                studentPanel.style.marginLeft = '0';
+            }
+        }
+
+        // Função para escurece
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var painel = document.querySelector('.painelEstudante');
+            var overlay = document.getElementById('overlay');
+
+            if (sidebar.style.left === '-250px' || sidebar.style.left === '') {
+                sidebar.style.left = '0';
+                painel.style.marginLeft = '250px';
+                overlay.classList.add('active');
+            } else {
+                sidebar.style.left = '-250px';
+                painel.style.marginLeft = '0';
+                overlay.classList.remove('active');
+            }
+        }
+
+        // Função Muda tema
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.querySelector('.toggle-theme');
+
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                btn.textContent = '🌙';
+            } else {
+                btn.textContent = '☀️';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -30,4 +30,12 @@ module.exports = new class PainelController {
     async aula(req, res) {
         res.sendFile(path.resolve('./public/html/pag-aula.html'));
     }
+
+    async listaAlunos(req, res) {
+        res.sendFile(path.resolve('./public/html/lista-alunos.html'));
+    }
+
+    async listaProfessores(req, res) {
+        res.sendFile(path.resolve('./public/html/lista-professores.html'));
+    }
 }

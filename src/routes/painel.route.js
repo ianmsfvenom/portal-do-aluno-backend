@@ -5,7 +5,9 @@ const checkAlunoMiddleware = require('../middlewares/check-aluno-middleware');
 const painelValidator = require('../validators/PainelValidator');
 
 router.get('/', checkLoginMiddleware, painelController.index);
-router.get('/cursos', checkLoginMiddleware, checkAlunoMiddleware, painelController.cursos);
-router.get('/aula', checkLoginMiddleware, checkAlunoMiddleware, painelValidator.aula, painelController.aula);
+router.get('/cursos', checkLoginMiddleware, painelController.cursos);
+router.get('/aula', checkLoginMiddleware, painelValidator.aula, painelController.aula);
+router.get('/lista-alunos', checkLoginMiddleware, painelController.listaAlunos);
+router.get('/lista-professores', checkLoginMiddleware, painelController.listaProfessores);
 
 module.exports = router;

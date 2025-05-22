@@ -48,5 +48,11 @@ module.exports = new class ProgressoAlunoValidator {
         }
         next();
     }
-
+    updateByVideoId(req, res, next) {
+        const { video_id, progresso_video } = req.body;
+        if(!video_id) return next(new HttpError(400, 'Video obrigatório'));
+        if(video_id && isNaN(video_id)) return next(new HttpError(400, 'Video deve ser um número'));
+        if(progresso_video && isNaN(progresso_video)) return next(new HttpError(400, 'Progresso do video deve ser um número'));
+        next();
+    }
 }

@@ -23,8 +23,14 @@ module.exports =  new class VideoController {
     }
 
     async search(req, res) {
-        const { modulo } = req.query;
-        const videos = await prisma.video.findMany({ where: { modulo_id: Number(modulo) }, include: { progressos_alunos: true } });
-        return res.json(videos);
+        try {
+            const { modulo } = req.query;
+            const videos = await prisma.video.findMany({ where: { modulo_id: Number(modulo) }, include: { progressos_alunos: true } });
+            return res.json(videos);
+        } catch(e) {
+            console.log(e);
+            
+            next(new HttpError(500, 'Erro interno do servidor'))
+        }
     }
 }

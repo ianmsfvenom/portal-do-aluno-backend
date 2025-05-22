@@ -24,6 +24,7 @@ app.use('/plano', require('./src/routes/plano.route'));
 app.use('/turma', require('./src/routes/turma.route'));
 app.use('/apostila', require('./src/routes/apostila.route'));
 app.use('/avaliacao', require('./src/routes/avaliacao.route'));
+app.use('/progresso-aluno', require('./src/routes/progresso-aluno.route'));
 
 app.use(async (err, req, res, next) => {
     if (err instanceof HttpError) res.status(err.status).json({ message: err.message });

@@ -101,4 +101,18 @@ const { encryptPassword } = require('../utils/password-utils');
         ]
     })
 
+    await prisma.progressoAluno.createMany({
+        data: [
+            { aluno_id: 1, apostila_id: 1, avaliacao_id: 1, video_id: 1, baixou_apostila: false, progresso_video: 0, nota_avaliacao: 0, data_ultima_interacao: new Date() },
+            { aluno_id: 1, apostila_id: 2, avaliacao_id: 2, video_id: 2, baixou_apostila: false, progresso_video: 0, nota_avaliacao: 0, data_ultima_interacao: new Date() },
+            { aluno_id: 1, apostila_id: 3, avaliacao_id: 3, video_id: 3, baixou_apostila: false, progresso_video: 0, nota_avaliacao: 0, data_ultima_interacao: new Date() },
+            { aluno_id: 2, apostila_id: 4, avaliacao_id: 4, video_id: 4, baixou_apostila: false, progresso_video: 0, nota_avaliacao: 0, data_ultima_interacao: new Date() },
+            { aluno_id: 2, apostila_id: 5, avaliacao_id: 5, video_id: 5, baixou_apostila: false, progresso_video: 0, nota_avaliacao: 0, data_ultima_interacao: new Date() },
+            { aluno_id: 2, apostila_id: 6, avaliacao_id: 6, video_id: 6, baixou_apostila: false, progresso_video: 0, nota_avaliacao: 0, data_ultima_interacao: new Date() },
+            { aluno_id: 3, apostila_id: 7, avaliacao_id: 7, video_id: 7, baixou_apostila: false, progresso_video: 0, nota_avaliacao: 0, data_ultima_interacao: new Date() },
+            { aluno_id: 3, apostila_id: 8, avaliacao_id: 8, video_id: 8, baixou_apostila: false, progresso_video: 0, nota_avaliacao: 0, data_ultima_interacao: new Date() },
+            { aluno_id: 3, apostila_id: 9, avaliacao_id: 9, video_id: 9, baixou_apostila: false, progresso_video: 0, nota_avaliacao: 0, data_ultima_interacao: new Date() },
+        ]
+    })    
+
 })()

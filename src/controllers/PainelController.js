@@ -20,7 +20,7 @@ module.exports = new class PainelController {
                 return res.sendFile(path.resolve('./public/html/painel-aluno-startup.html'));
         }
         if(findUser.tipo === 'professor') return res.sendFile(path.resolve('./public/html/painel-professor.html'));
-        if(findUser.tipo === 'admin') return res.sendFile(path.resolve('./public/html/painel-admin.html'));
+        if(findUser.tipo === 'admin') return res.sendFile(path.resolve('./public/html/painel-administrador.html'));
     }
 
     async cursos(req, res) {
